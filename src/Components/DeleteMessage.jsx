@@ -24,7 +24,7 @@ export default function DeleteMessage() {
   return (
     <>
       <div className="w-screen h-screen absolute flex  justify-center items-center bg-black/50">
-        <div className="w-3/12 flex flex-col gap-3 bg-white p-3 rounded-lg">
+        <div className="w-10/12 sm:w-6/12 lg:w-3/12 flex flex-col gap-3 bg-white p-3 rounded-lg">
           <h2 className="text-xl">هل انت متأكد من رغبتك في حذف المهمة؟</h2>
           <p className="text-gray-600">
             لا يمكنك التراجع عن الحذف في حال اختيار زر (احذف)

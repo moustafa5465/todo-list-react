@@ -45,7 +45,7 @@ export default function TodoList() {
 
   function todoBtn(e) {
     e.preventDefault();
-    if (todoTitle === "") {
+    if (todoTitle.trim() === "") {
       showAlert("يجب ان تكتب شيئا ❌", "error");
       return;
     }
@@ -92,12 +92,13 @@ export default function TodoList() {
     <>
       <div className="bg-white rounded-sm xl:w-4/12 md:w-6/12 p-3">
         <h1
-          className="pt-3 pb-4 text-center font-bold text-7xl flex flex-col justify-center items-center
-        relative before:absolute before:w-full before:h-px before:rounded-1lg before:bg-gray-300 before:bottom-0"
+          className="pt-3 pb-4 text-center font-bold text-4xl lg:text-6xl flex flex-col justify-center items-center
+        relative before:absolute before:w-full before:h-px before:rounded-1lg before:bg-gray-300 before:bottom-0
+         sm:text-5xl"
         >
           مهامي
         </h1>
-        <div className="grid grid-cols-3 text-center my-5">
+        <div className="grid grid-cols-3 text-center my-5 text-sm sm:text-base">
           <button
             onClick={() => setFilter("all")}
             className={`${regular} ${filter === "all" ? active : regular}`}
@@ -127,7 +128,7 @@ export default function TodoList() {
         </div>
         <form
           onSubmit={todoBtn}
-          className="flex flex-row gap-3 items-center mt-6 lg:flex-nowrap sm:flex-wrap"
+          className="flex flex-row gap-3 flex-wrap items-center mt-6 lg:flex-nowrap sm:flex-nowrap"
         >
           <div className="relative flex-8/12">
             <input

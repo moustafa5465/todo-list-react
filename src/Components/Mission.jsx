@@ -20,15 +20,15 @@ export default function Mission({ todo, updateHandel }) {
 
   return (
     <>
-      <div className="flex flex-row flex-wrap sm:flex-nowrap items-center bg-blue-900 p-3 py-4 rounded-sm hover:py-9">
+      <div className="flex flex-col gap-2 sm:flex-row justify-center sm:justify-between flex-wrap sm:flex-nowrap items-center bg-blue-900 p-3 py-4 rounded-sm hover:py-9">
         <div className="flex-7/12 flex flex-col">
           <h3
-            className={`text-white font-bold text-2xl ${todo.isCompleted ? "line-through" : "no-underline"}`}
+            className={`text-white font-bold text-center sm:text-right text-2xl ${todo.isCompleted ? "line-through" : "no-underline"}`}
           >
             {todo.title}
           </h3>
           <p
-            className={`text-gray-400 text-lg ${todo.isCompleted ? "line-through" : "no-underline"}`}
+            className={`text-gray-400 text-center sm:text-right text-lg ${todo.isCompleted ? "line-through" : "no-underline"}`}
           >
             {todo.details}
           </p>

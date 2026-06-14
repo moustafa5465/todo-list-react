@@ -28,7 +28,10 @@ export default function UpdateModal({ onClose, update }) {
   };
 
   function updateConfirmHandle() {
-    if (updateInputs.title.trim() === "" && updateInputs.details.trim() === "" ) {
+    if (
+      updateInputs.title.trim() === "" &&
+      updateInputs.details.trim() === ""
+    ) {
       return;
     }
     const updateTodos = allTodos.map((e) => {
@@ -67,7 +70,7 @@ export default function UpdateModal({ onClose, update }) {
   return (
     <>
       <div className="w-screen h-screen absolute flex justify-center items-center">
-        <div className="z-50 w-3/12 flex flex-col gap-3 bg-white p-3 rounded-lg">
+        <div className="z-50 w-10/12 sm:w-6/12 lg:w-3/12 flex flex-col gap-3 bg-white p-3 rounded-lg">
           <p className="text-2xl text-red-600 text-center font-bold">
             تعديل المهمة ✍️
           </p>
