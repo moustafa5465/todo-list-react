@@ -1,17 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Mission from "./Mission";
 import { v4 as uuidv4 } from "uuid";
 import { useContext } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
 import DeleteMessage from "./DeleteMessage";
 import SuccessMessage from "./SuccessMessage";
-import { SuccessAlert } from "../Contexts/SuccessContext";
+import { useAlert } from "../Contexts/SuccessContext";
 import UpdateModal from "./UpdateModal";
 
 export default function TodoList() {
   // Context
   const { allTodos, setAllTodos } = useContext(TodosContext);
-  const { setSuccessHandle } = useContext(SuccessAlert);
+  const { showAlert } = useAlert();
   // Styles
   const active = "text-red-700 bg-red-100";
   const regular = "px-2 py-1 border border-gray-300 rounded-sm cursor-pointer";
@@ -26,14 +26,6 @@ export default function TodoList() {
   }
   function updateCloseHandel() {
     setUpdateMessage(false);
-  }
-
-  function showAlert(msg, type) {
-    setSuccessHandle({ show: true, message: msg, type: type });
-
-    setTimeout(() => {
-      setSuccessHandle({ show: false, message: "", type: type });
-    }, [2000]);
   }
 
   useEffect(() => {
@@ -71,18 +63,20 @@ export default function TodoList() {
         top: listRef.current.scrollHeight,
         behavior: "smooth",
       });
-    }, 0);
+    }, [0]);
   }
 
-  const filteredTodos = allTodos.filter((todo) => {
-    if (filter === "done") {
-      return todo.isCompleted === true;
-    }
-    if (filter === "undone") {
-      return todo.isCompleted === false;
-    }
-    return true;
-  });
+  const filteredTodos = useMemo(() => {
+    return allTodos.filter((todo) => {
+      if (filter === "done") {
+        return todo.isCompleted === true;
+      }
+      if (filter === "undone") {
+        return todo.isCompleted === false;
+      }
+      return true;
+    });
+  }, [filter, allTodos]);
 
   const todosElements = filteredTodos.map((m) => {
     return <Mission key={m.id} todo={m} updateHandel={updateOpenHandel} />;

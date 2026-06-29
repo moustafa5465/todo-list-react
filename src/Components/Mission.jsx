@@ -2,21 +2,14 @@ import { Check, Pencil, Trash2 } from "lucide-react";
 import { useContext } from "react";
 import { TodosContext, TodoId } from "../Contexts/TodosContext";
 import { DeleteAlert } from "../Contexts/DeleteContext";
-import { SuccessAlert } from "../Contexts/SuccessContext";
+import { useAlert } from "../Contexts/SuccessContext";
 
 export default function Mission({ todo, updateHandel }) {
   const { allTodos, setAllTodos } = useContext(TodosContext);
   const { setDeleteMessage } = useContext(DeleteAlert);
   const { setTodoId } = useContext(TodoId);
-  const { setSuccessHandle } = useContext(SuccessAlert);
-
-  function showAlert(msg, type) {
-    setSuccessHandle({ show: true, message: msg, type: type });
-
-    setTimeout(() => {
-      setSuccessHandle({ show: false, message: "", type: type });
-    }, [2000]);
-  }
+  const { showAlert } = useAlert();
+  
 
   return (
     <>
@@ -47,7 +40,7 @@ export default function Mission({ todo, updateHandel }) {
                   if (t.isCompleted == true) {
                     showAlert("تم الانجاز بنجاح 🎉", "success");
                   } else if (t.isCompleted == false) {
-                    showAlert("تم الغاء الانجاز ✅", "success");
+                    showAlert("تم الغاء الانجاز ❌", "error");
                   }
                 }
                 return t;

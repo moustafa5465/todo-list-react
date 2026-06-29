@@ -4,11 +4,8 @@
   box-sizing: border-box;
   transition: all 0.3s ease;
   scroll-behavior: smooth;
-}
-
-body {
-  font-family: "El Messiri", sans-serif;
   direction: rtl;
+  font-family: "El Messiri", sans-serif !important;
 }
 
 .scroll-bar-custom {

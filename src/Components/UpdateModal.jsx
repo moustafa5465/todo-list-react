@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { TodoId, TodosContext } from "../Contexts/TodosContext";
-import { SuccessAlert } from "../Contexts/SuccessContext";
+import { useAlert } from "../Contexts/SuccessContext";
 
 export default function UpdateModal({ onClose, update }) {
   const { todoId } = useContext(TodoId);
   const { allTodos, setAllTodos } = useContext(TodosContext);
-  const { setSuccessHandle } = useContext(SuccessAlert);
+  const { showAlert } = useAlert();
 
   const [updateInputs, setUpdateInputs] = useState({
     title: "",
@@ -56,15 +56,7 @@ export default function UpdateModal({ onClose, update }) {
       details: "",
     });
     onClose();
-    showAlert("✅ تم التعديل بنجاح", "success");
-  }
-
-  function showAlert(msg, type) {
-    setSuccessHandle({ show: true, message: msg, type: type });
-
-    setTimeout(() => {
-      setSuccessHandle({ show: false, message: "", type: type });
-    }, [2000]);
+    showAlert("✅ تم التعديل بنجاح", "success" , "update");
   }
 
   return (

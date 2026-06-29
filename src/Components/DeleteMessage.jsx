@@ -1,24 +1,16 @@
 import { useContext } from "react";
 import { DeleteAlert } from "../Contexts/DeleteContext";
 import { TodoId, TodosContext } from "../Contexts/TodosContext";
-import { SuccessAlert } from "../Contexts/SuccessContext";
+import { useAlert } from "../Contexts/SuccessContext";
 
 export default function DeleteMessage() {
   const { deleteMessage, setDeleteMessage } = useContext(DeleteAlert);
   const { todoId } = useContext(TodoId);
   const { allTodos, setAllTodos } = useContext(TodosContext);
-  const { setSuccessHandle } = useContext(SuccessAlert);
+  const { showAlert } = useAlert();
 
   if (deleteMessage == false) {
     return;
-  }
-
-  function showAlert(msg, type) {
-    setSuccessHandle({ show: true, message: msg, type: type });
-
-    setTimeout(() => {
-      setSuccessHandle({ show: false, message: "", type: type });
-    }, [2000]);
   }
 
   return (
@@ -44,7 +36,7 @@ export default function DeleteMessage() {
             <button
               onClick={() => {
                 const updateTodos = allTodos.filter((e) => e.id !== todoId);
-                localStorage.setItem("users", JSON.stringify(updateTodos)) ;
+                localStorage.setItem("users", JSON.stringify(updateTodos));
                 setAllTodos(updateTodos);
                 setDeleteMessage(false);
                 showAlert("تم مسح المهمة بنجاح ✅", "success");
