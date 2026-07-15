@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
-import { TodoId, TodosContext } from "../Contexts/TodosContext";
+import { useState } from "react";
+import { useTodo } from "../Contexts/TodosContext";
 import { useAlert } from "../Contexts/SuccessContext";
 
-export default function UpdateModal({ onClose, update }) {
-  const { todoId } = useContext(TodoId);
-  const { allTodos, setAllTodos } = useContext(TodosContext);
+export default function UpdateModal({ onClose, update, todoId }) {
+  const { allTodos, setAllTodos } = useTodo();
   const { showAlert } = useAlert();
 
   const [updateInputs, setUpdateInputs] = useState({
@@ -56,7 +55,7 @@ export default function UpdateModal({ onClose, update }) {
       details: "",
     });
     onClose();
-    showAlert("✅ تم التعديل بنجاح", "success" , "update");
+    showAlert("✅ تم التعديل بنجاح", "success", "update");
   }
 
   return (

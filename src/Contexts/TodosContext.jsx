@@ -1,5 +1,17 @@
-import { createContext } from "react";
+import { createContext, useContext, useState } from "react";
 
-export const TodosContext = createContext([]);
+const TodosContext = createContext();
 
-export const TodoId = createContext();
+export function TodosProvider({ children }) {
+  const [allTodos, setAllTodos] = useState([]);
+
+  return (
+    <>
+      <TodosContext value={{ allTodos, setAllTodos }}>{children}</TodosContext>
+    </>
+  );
+}
+
+export const useTodo = () => {
+  return useContext(TodosContext);
+};

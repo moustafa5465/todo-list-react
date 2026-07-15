@@ -1,15 +1,10 @@
 import { Check, Pencil, Trash2 } from "lucide-react";
-import { useContext } from "react";
-import { TodosContext, TodoId } from "../Contexts/TodosContext";
-import { DeleteAlert } from "../Contexts/DeleteContext";
+import { useTodo } from "../Contexts/TodosContext";
 import { useAlert } from "../Contexts/SuccessContext";
 
-export default function Mission({ todo, updateHandel }) {
-  const { allTodos, setAllTodos } = useContext(TodosContext);
-  const { setDeleteMessage } = useContext(DeleteAlert);
-  const { setTodoId } = useContext(TodoId);
+export default function Mission({ todo, updateHandel, deleteHandel, todoId }) {
+  const { allTodos, setAllTodos } = useTodo();
   const { showAlert } = useAlert();
-  
 
   return (
     <>
@@ -59,7 +54,7 @@ export default function Mission({ todo, updateHandel }) {
           <button
             onClick={() => {
               updateHandel();
-              setTodoId(todo.id);
+              todoId(todo.id);
             }}
             className="group border-2 rounded-full border-blue-800 bg-white p-2 hover:bg-blue-300 hover:cursor-pointer"
           >
@@ -67,8 +62,8 @@ export default function Mission({ todo, updateHandel }) {
           </button>
           <button
             onClick={() => {
-              setTodoId(todo.id);
-              setDeleteMessage(true);
+              deleteHandel();
+              todoId(todo.id);
             }}
             className="group border-2 rounded-full border-red-700 bg-white p-2 hover:bg-red-300 hover:cursor-pointer"
           >

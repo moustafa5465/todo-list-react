@@ -1,16 +1,16 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useReducer } from "react";
 import Mission from "./Mission";
 import { v4 as uuidv4 } from "uuid";
-import { useContext } from "react";
-import { TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
 import DeleteMessage from "./DeleteMessage";
 import SuccessMessage from "./SuccessMessage";
 import { useAlert } from "../Contexts/SuccessContext";
 import UpdateModal from "./UpdateModal";
+// import { TodoReducer } from "../R/todoReducer";
 
 export default function TodoList() {
   // Context
-  const { allTodos, setAllTodos } = useContext(TodosContext);
+  const { allTodos, setAllTodos } = useTodo();
   const { showAlert } = useAlert();
   // Styles
   const active = "text-red-700 bg-red-100";
@@ -20,12 +20,24 @@ export default function TodoList() {
   const [filter, setFilter] = useState("all");
   const [todoTitle, setTodoTitle] = useState("");
   const [updateMessage, setUpdateMessage] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState(false);
+  const [todoId, setTodoId] = useState();
+
+  // Reducers
+  // const [singleTodo, singleTodoDispatch] = useReducer(TodoReducer, []);
 
   function updateOpenHandel() {
     setUpdateMessage(true);
   }
   function updateCloseHandel() {
     setUpdateMessage(false);
+  }
+
+  function deleteOpenHandel() {
+    setDeleteMessage(true);
+  }
+  function deleteCloseHandel() {
+    setDeleteMessage(false);
   }
 
   useEffect(() => {
@@ -79,7 +91,15 @@ export default function TodoList() {
   }, [filter, allTodos]);
 
   const todosElements = filteredTodos.map((m) => {
-    return <Mission key={m.id} todo={m} updateHandel={updateOpenHandel} />;
+    return (
+      <Mission
+        key={m.id}
+        todo={m}
+        updateHandel={updateOpenHandel}
+        deleteHandel={deleteOpenHandel}
+        todoId={setTodoId}
+      />
+    );
   });
 
   return (
@@ -152,14 +172,25 @@ export default function TodoList() {
             className="flex-4/12 p-2 bg-red-800 rounded-sm text-white
             font-bold text-xl hover:cursor-pointer"
             type="submit"
+            // onClick={() => {
+            //   singleTodoDispatch({ type: "ADD", payload: todoTitle });
+            // }}
           >
             اضافة
           </button>
         </form>
       </div>
       <SuccessMessage />
-      <UpdateModal update={updateMessage} onClose={updateCloseHandel} />
-      <DeleteMessage />
+      <UpdateModal
+        update={updateMessage}
+        onClose={updateCloseHandel}
+        todoId={todoId}
+      />
+      <DeleteMessage
+        deleteMessage={deleteMessage}
+        onClose={deleteCloseHandel}
+        todoId={todoId}
+      />
     </>
   );
 }

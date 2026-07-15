@@ -1,12 +1,8 @@
-import { useContext } from "react";
-import { DeleteAlert } from "../Contexts/DeleteContext";
-import { TodoId, TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
 import { useAlert } from "../Contexts/SuccessContext";
 
-export default function DeleteMessage() {
-  const { deleteMessage, setDeleteMessage } = useContext(DeleteAlert);
-  const { todoId } = useContext(TodoId);
-  const { allTodos, setAllTodos } = useContext(TodosContext);
+export default function DeleteMessage({ deleteMessage, onClose, todoId }) {
+  const { allTodos, setAllTodos } = useTodo();
   const { showAlert } = useAlert();
 
   if (deleteMessage == false) {
@@ -24,9 +20,7 @@ export default function DeleteMessage() {
           <div className="flex gap-2 flex-row justify-end mt-3">
             <button
               onClick={() => {
-                if (deleteMessage == true) {
-                  setDeleteMessage(false);
-                }
+                onClose();
               }}
               className="hover:bg-red-800 rounded-md hover:text-white
              text-red-800 hover:cursor-pointer px-3 py-1"
@@ -38,7 +32,7 @@ export default function DeleteMessage() {
                 const updateTodos = allTodos.filter((e) => e.id !== todoId);
                 localStorage.setItem("users", JSON.stringify(updateTodos));
                 setAllTodos(updateTodos);
-                setDeleteMessage(false);
+                onClose();
                 showAlert("تم مسح المهمة بنجاح ✅", "success");
               }}
               className="hover:bg-red-800 rounded-md hover:text-white
